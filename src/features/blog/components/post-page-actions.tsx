@@ -8,6 +8,7 @@ import { useMemo, useRef, useState } from "react"
 import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
+import { CopyStateIcon } from "@/components/ui/copy-button-primitive"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import type { CopyState } from "@/hooks/use-copy-to-clipboard"
-import { CopyStateIcon } from "@/registry/components/copy-button"
 
 const cache = new Map<string, string>()
 

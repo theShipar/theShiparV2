@@ -2,10 +2,10 @@
 
 import { useWebHaptics } from "web-haptics/react"
 
+import type { CopyButtonProps } from "@/components/ui/copy-button-primitive"
+import { CopyButton as CopyButtonPrimitive } from "@/components/ui/copy-button-primitive"
 import type { Event } from "@/lib/events"
 import { trackEvent } from "@/lib/events"
-import type { CopyButtonProps } from "@/registry/components/copy-button"
-import { CopyButton as CopyButtonPrimitive } from "@/registry/components/copy-button"
 
 export function CopyButton({
   size = "icon-sm",

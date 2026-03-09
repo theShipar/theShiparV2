@@ -1,11 +1,5 @@
 import type { Metadata } from "next"
 
-import { SITE_INFO, X_USERNAME } from "@/config/site"
-import {
-  TESTIMONIALS_1,
-  TESTIMONIALS_2,
-} from "@/features/portfolio/data/testimonials"
-import { cn } from "@/lib/utils"
 import {
   Testimonial,
   TestimonialAuthor,
@@ -15,7 +9,13 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-} from "@/registry/components/testimonial"
+} from "@/components/ui/testimonial-primitive"
+import { SITE_INFO, X_USERNAME } from "@/config/site"
+import {
+  TESTIMONIALS_1,
+  TESTIMONIALS_2,
+} from "@/features/portfolio/data/testimonials"
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Loved by Devs Worldwide",

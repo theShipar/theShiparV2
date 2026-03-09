@@ -7,7 +7,7 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-} from "@/registry/components/testimonial"
+} from "@/components/ui/testimonial-primitive"
 
 import type { Testimonial as TestimonialType } from "../../types/testimonials"
 

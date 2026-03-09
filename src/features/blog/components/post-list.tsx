@@ -21,7 +21,7 @@ export function PostList({ posts }: { posts: Doc[] }) {
 
         {posts.length === 0 && (
           <div className="screen-line-before screen-line-after p-4">
-            <p className="font-mono text-sm">No posts found.</p>
+            <p className="font-mono text-sm">No projects found.</p>
           </div>
         )}
       </div>

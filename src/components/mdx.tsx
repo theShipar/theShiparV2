@@ -11,8 +11,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
-import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
-import { ComponentSource } from "@/components/component-source"
 import {
   Table,
   TableBody,
@@ -23,24 +21,18 @@ import {
 } from "@/components/ui/table"
 import { Code, Heading } from "@/components/ui/typography"
 import { UTM_PARAMS } from "@/config/site"
-import { generator } from "@/lib/auto-type-table"
 import { rehypeAddQueryParams } from "@/lib/rehype-add-query-params"
 import {
   rehypeCodeRawString,
   rehypeHighlightCode,
   rehypeHighlightCodeRawString,
 } from "@/lib/rehype-code-block"
-import { rehypeComponent } from "@/lib/rehype-component"
 import { rehypeNpmCommand } from "@/lib/rehype-npm-command"
 import { remarkCodeImport } from "@/lib/remark-code-import"
 import { cn } from "@/lib/utils"
-import { AutoTypeTable } from "@/registry/components/auto-type-table"
 
 import { Callout } from "./callout"
-import { CodeTabs } from "./code-tabs"
-import { ComponentPreviewV2 as ComponentPreview } from "./component-preview-v2"
 import { FramedImage, IframeEmbed, YouTubeEmbed } from "./embed"
-import { mdxCodeBlockComponents } from "./mdx-code-block"
 import { Testimonial } from "./testimonial"
 
 const components: MDXRemoteProps["components"] = {
@@ -123,12 +115,6 @@ const components: MDXRemoteProps["components"] = {
   //     </>
   //   )
   // },
-  ...mdxCodeBlockComponents,
-  code: Code,
-  ComponentPreview,
-  ComponentSource,
-  CodeCollapsibleWrapper,
-  CodeTabs,
   Callout,
   Steps: (props) => (
     <div
@@ -155,7 +141,6 @@ const components: MDXRemoteProps["components"] = {
   IframeEmbed,
   FramedImage,
   Testimonial,
-  AutoTypeTable: (props) => <AutoTypeTable {...props} generator={generator} />,
 }
 
 const options: MDXRemoteProps["options"] = {
@@ -167,7 +152,6 @@ const options: MDXRemoteProps["options"] = {
         { target: "_blank", rel: "nofollow noopener noreferrer" },
       ],
       rehypeSlug,
-      rehypeComponent,
       // () => (tree) => {
       //   visit(tree, (node) => {
       //     if (node?.type === "element" && node?.tagName === "pre") {

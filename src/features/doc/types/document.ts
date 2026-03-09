@@ -26,6 +26,18 @@ export type DocMetadata = {
    * Last updated date as an ISO date string (e.g. YYYY-MM-DD).
    */
   updatedAt: string
+  /**
+   * Link to Figma file for the project.
+   */
+  figmaLink?: string
+  /**
+   * Link to live project.
+   */
+  liveLink?: string
+  /**
+   * Array of tags for the project (e.g. Super App, SaaS, AI Platform).
+   */
+  tags?: string[]
 }
 
 export type Doc = {

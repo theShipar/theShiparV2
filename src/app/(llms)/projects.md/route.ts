@@ -1,19 +1,28 @@
-import { PROJECTS } from "@/features/portfolio/data/projects"
+import { SITE_INFO } from "@/config/site"
+import { getAllDocs } from "@/features/doc/data/documents"
 
-const content = `# Projects
+async function getContent() {
+  const allPosts = getAllDocs()
+  const projects = allPosts
+    .map((item) => {
+      const category = item.metadata.category
+        ? `\n\nCategory: ${item.metadata.category}`
+        : ""
+      const description = item.metadata.description
+        ? `\n\n${item.metadata.description.trim()}`
+        : ""
+      return `## ${item.metadata.title}\n\nProject URL: ${SITE_INFO.url}/projects/${item.slug}${category}${description}`
+    })
+    .join("\n\n")
 
-${PROJECTS.map((item) => {
-  const skills = `\n\nSkills: ${item.skills.join(", ")}`
-  const description = item.description ? `\n\n${item.description.trim()}` : ""
-  return `## ${item.title}\n\nProject URL: ${item.link}${skills}${description}`
-}).join("\n\n")}
-`
+  return `# Projects\n\n${projects}`
+}
 
 export const revalidate = false
 export const dynamic = "force-static"
 
 export async function GET() {
-  return new Response(content, {
+  return new Response(await getContent(), {
     headers: {
       "Content-Type": "text/markdown;charset=utf-8",
     },

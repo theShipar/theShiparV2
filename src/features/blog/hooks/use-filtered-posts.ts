@@ -14,14 +14,26 @@ const matchesQuery = (post: Doc, normalizedQuery: string) => {
   )
 }
 
-const searchPosts = (posts: Doc[], query: string | null) => {
-  if (!query) return posts
+const searchPosts = (
+  posts: Doc[],
+  query: string | null,
+  category: string | null
+) => {
+  let filtered = posts
+
+  if (category && category !== "all") {
+    filtered = filtered.filter(
+      (post) => post.metadata.category?.toLowerCase() === category.toLowerCase()
+    )
+  }
+
+  if (!query) return filtered
 
   const normalizedQuery = normalize(query)
-  return posts.filter((post) => matchesQuery(post, normalizedQuery))
+  return filtered.filter((post) => matchesQuery(post, normalizedQuery))
 }
 
 export function useFilteredPosts(posts: Doc[]) {
-  const { query } = useSearchQuery()
-  return searchPosts(posts, query)
+  const { query, category } = useSearchQuery()
+  return searchPosts(posts, query, category)
 }

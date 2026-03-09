@@ -4,8 +4,6 @@ import { useMotionValueEvent, useScroll } from "motion/react"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
-import { ChanhDaiMark } from "./chanhdai-mark"
-
 const calcDistance = (el: HTMLElement) => {
   const rect = el.getBoundingClientRect()
   const scrollTop = document.documentElement.scrollTop
@@ -39,15 +37,21 @@ function ChanhDaiMarkMotion() {
   }, [])
 
   return (
-    <ChanhDaiMark
+    <div
       data-visible={visible}
-      className="translate-y-2 opacity-0 transition-[opacity,translate] duration-300 data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100"
-    />
+      className="translate-y-2 font-bold tracking-tight opacity-0 transition-[opacity,translate] duration-300 data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100"
+    >
+      TheShipar
+    </div>
   )
 }
 
 export function SiteHeaderMark() {
   const pathname = usePathname()
   const isHome = ["/", "/index"].includes(pathname)
-  return isHome ? <ChanhDaiMarkMotion /> : <ChanhDaiMark />
+  return isHome ? (
+    <ChanhDaiMarkMotion />
+  ) : (
+    <div className="font-bold tracking-tight">TheShipar</div>
+  )
 }

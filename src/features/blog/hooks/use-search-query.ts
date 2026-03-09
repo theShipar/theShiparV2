@@ -5,5 +5,9 @@ export function useSearchQuery() {
     defaultValue: "",
   })
 
-  return { query, setQuery }
+  const [category, setCategory] = useQueryState("category", {
+    defaultValue: "all",
+  })
+
+  return { query, setQuery, category, setCategory }
 }

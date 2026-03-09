@@ -20,16 +20,12 @@ export const MAIN_NAV: NavItem[] = [
     href: "/",
   },
   {
-    title: "Components",
-    href: "/components",
+    title: "Projects",
+    href: "/projects",
   },
   {
-    title: "Blocks",
-    href: "/blocks",
-  },
-  {
-    title: "Blog",
-    href: "/blog",
+    title: "Resume",
+    href: "/resume",
   },
   // {
   //   title: "Sponsors",
@@ -37,13 +33,13 @@ export const MAIN_NAV: NavItem[] = [
   // },
 ]
 
-export const X_USERNAME = "@iamncdai"
-export const GITHUB_USERNAME = "ncdai"
-export const SOURCE_CODE_GITHUB_REPO = "ncdai/chanhdai.com"
-export const SOURCE_CODE_GITHUB_URL = "https://github.com/ncdai/chanhdai.com"
+export const X_USERNAME = "@theshipar"
+export const GITHUB_USERNAME = "theshipar"
+export const SOURCE_CODE_GITHUB_REPO = "theShipar/theShiparV2"
+export const SOURCE_CODE_GITHUB_URL = "https://github.com/theShipar/theShiparV2"
 
-export const SPONSORSHIP_URL = "https://github.com/sponsors/ncdai"
+export const SPONSORSHIP_URL = "https://github.com/sponsors/theshipar"
 
 export const UTM_PARAMS = {
-  utm_source: "chanhdai.com",
+  utm_source: "theshipar.com",
 }

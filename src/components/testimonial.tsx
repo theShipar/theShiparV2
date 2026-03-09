@@ -1,6 +1,6 @@
+import * as TestimonialPrimitive from "@/components/ui/testimonial-primitive"
 import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials"
 import { cn } from "@/lib/utils"
-import * as TestimonialPrimitive from "@/registry/components/testimonial"
 
 export function Testimonial({
   className,
