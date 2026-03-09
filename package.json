@@ -1,14 +1,10 @@
 {
-  "name": "chanhdai.com",
+  "name": "theshipar-v2",
   "version": "0.1.0",
   "description": "A minimal, pixel-perfect dev portfolio, shadcn registry, and blog.",
-  "homepage": "https://chanhdai.com",
+  "homepage": "https://github.com/theShipar/theShiparV2",
   "license": "MIT",
-  "author": {
-    "name": "Nguyen Chanh Dai",
-    "email": "dai@chanhdai.com",
-    "url": "https://github.com/ncdai"
-  },
+  "author": "theShipar",
   "contributors": [
     {
       "name": "Nguyen Chanh Dai",
@@ -18,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ncdai/chanhdai.com.git"
+    "url": "git+https://github.com/theShipar/theShiparV2.git"
   },
   "scripts": {
     "dev": "portless ncdai next dev",
