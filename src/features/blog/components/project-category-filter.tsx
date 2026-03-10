@@ -6,11 +6,17 @@ import { useSearchQuery } from "../hooks/use-search-query"
 
 const CATEGORIES = [
   { label: "All", value: "all" },
-  { label: "Apps", value: "apps" },
+  { label: "App Design", value: "app design" },
   { label: "SaaS", value: "saas" },
   { label: "Landing Page", value: "landing page" },
+  { label: "Website Redesign", value: "website redesign" },
   { label: "B2B", value: "b2b" },
-  { label: "Web Applications", value: "web applications" },
+  { label: "AI Platform", value: "ai platform" },
+  { label: "Fintech", value: "fintech" },
+  { label: "HealthTech", value: "healthtech" },
+  { label: "EdTech", value: "edtech" },
+  { label: "Game Design", value: "game design" },
+  { label: "CyberSecurity", value: "cybersecurity" },
 ]
 
 export function ProjectCategoryFilter() {

@@ -8,8 +8,9 @@ export type DocMetadata = {
   image?: string
   /**
    * Category identifier/slug used for filtering (see getDocsByCategory).
+   * Supports a single category string or an array of categories.
    */
-  category?: string
+  category?: string | string[]
   /**
    * Flag to show a "New" badge/highlight in the UI.
    */

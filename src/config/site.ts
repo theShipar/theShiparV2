@@ -27,18 +27,12 @@ export const MAIN_NAV: NavItem[] = [
     title: "Resume",
     href: "/resume",
   },
-  // {
-  //   title: "Sponsors",
-  //   href: "/sponsors",
-  // },
 ]
 
 export const X_USERNAME = "@theshipar"
 export const GITHUB_USERNAME = "theshipar"
 export const SOURCE_CODE_GITHUB_REPO = "theShipar/theShiparV2"
 export const SOURCE_CODE_GITHUB_URL = "https://github.com/theShipar/theShiparV2"
-
-export const SPONSORSHIP_URL = "https://github.com/sponsors/theshipar"
 
 export const UTM_PARAMS = {
   utm_source: "theshipar.com",

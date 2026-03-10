@@ -19,6 +19,8 @@ export type User = {
   email: string
   /** Personal/homepage URL */
   website: string
+  /** Behance profile URL */
+  behance?: string
   /** Primary/current role shown on profile */
   jobTitle: string
   /** Work history entries */

@@ -58,7 +58,15 @@ export function getDocBySlug(slug: string) {
 }
 
 export function getDocsByCategory(category: string) {
-  return getAllDocs().filter((doc) => doc.metadata?.category === category)
+  return getAllDocs().filter((doc) => {
+    const docCategory = doc.metadata?.category
+
+    if (Array.isArray(docCategory)) {
+      return docCategory.some((c) => c.toLowerCase() === category.toLowerCase())
+    }
+
+    return docCategory?.toLowerCase() === category.toLowerCase()
+  })
 }
 
 export function findNeighbour(docs: Doc[], slug: string) {

@@ -24,7 +24,11 @@ export function ProfileHeader() {
       </div>
 
       <div className="flex flex-1 flex-col">
-        <div className="flex grow items-end pb-1 pl-4" />
+        <div className="flex grow items-end pb-1.5 pl-4">
+          <span className="text-[12px] font-normal tracking-tight text-white/30">
+            Strategy → UI → Scale
+          </span>
+        </div>
 
         <div className="border-t border-edge">
           <div className="flex items-center gap-2 pl-4">

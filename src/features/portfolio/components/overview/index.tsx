@@ -28,19 +28,19 @@ export function Overview() {
       <h2 className="sr-only">Overview</h2>
 
       <PanelContent className="space-y-2.5">
-        {USER.jobs.map((job, index) => {
-          return (
-            <JobItem
-              key={index}
-              title={job.title}
-              company={job.company}
-              website={job.website}
-              experienceId={job.experienceId}
-            />
-          )
-        })}
-
         <div className="grid gap-x-4 gap-y-2.5 sm:grid-cols-2">
+          {USER.jobs.map((job, index) => {
+            return (
+              <JobItem
+                key={index}
+                title={job.title}
+                company={job.company}
+                website={job.website}
+                experienceId={job.experienceId}
+              />
+            )
+          })}
+
           <IntroItem>
             <IntroItemIcon>
               <MapPinIcon />

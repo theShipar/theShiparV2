@@ -60,43 +60,55 @@ export function PostItem({
 
         {post.metadata.category && (
           <div className="flex flex-wrap gap-1.5">
-            <span className="inline-flex items-center rounded-md border border-edge bg-muted/50 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground capitalize">
-              {post.metadata.category}
-            </span>
+            {(Array.isArray(post.metadata.category)
+              ? post.metadata.category
+              : [post.metadata.category]
+            ).map((cat) => (
+              <span
+                key={cat}
+                className="inline-flex items-center rounded-md border border-edge bg-muted/50 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground capitalize"
+              >
+                {cat}
+              </span>
+            ))}
           </div>
         )}
 
         <div className="mt-2 flex flex-wrap gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-8 gap-2 px-3 text-xs"
-            asChild
-          >
-            <a
-              href={post.metadata.figmaLink || "https://figma.com"}
-              target="_blank"
-              rel="noopener noreferrer"
+          {post.metadata.figmaLink && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 gap-2 px-3 text-xs"
+              asChild
             >
-              <Figma className="size-3.5" />
-              View Figma
-            </a>
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-8 gap-2 px-3 text-xs"
-            asChild
-          >
-            <a
-              href={post.metadata.liveLink || SITE_INFO.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              <a
+                href={post.metadata.figmaLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Figma className="size-3.5" />
+                View in Figma
+              </a>
+            </Button>
+          )}
+          {post.metadata.liveLink && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 gap-2 px-3 text-xs"
+              asChild
             >
-              <ExternalLink className="size-3.5" />
-              View Live
-            </a>
-          </Button>
+              <a
+                href={post.metadata.liveLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="size-3.5" />
+                View Live
+              </a>
+            </Button>
+          )}
         </div>
       </div>
     </div>

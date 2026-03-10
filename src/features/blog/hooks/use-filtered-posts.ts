@@ -8,9 +8,25 @@ const matchesQuery = (post: Doc, normalizedQuery: string) => {
   const normalizedTitle = normalize(post.metadata.title)
   const normalizedDescription = normalize(post.metadata.description)
 
+  const categories = Array.isArray(post.metadata.category)
+    ? post.metadata.category
+    : post.metadata.category
+      ? [post.metadata.category]
+      : []
+  const matchesCategory = categories.some((cat) =>
+    normalize(cat).includes(normalizedQuery)
+  )
+
+  const tags = post.metadata.tags || []
+  const matchesTag = tags.some((tag) =>
+    normalize(tag).includes(normalizedQuery)
+  )
+
   return (
     normalizedTitle.includes(normalizedQuery) ||
-    normalizedDescription.includes(normalizedQuery)
+    normalizedDescription.includes(normalizedQuery) ||
+    matchesCategory ||
+    matchesTag
   )
 }
 
@@ -22,9 +38,17 @@ const searchPosts = (
   let filtered = posts
 
   if (category && category !== "all") {
-    filtered = filtered.filter(
-      (post) => post.metadata.category?.toLowerCase() === category.toLowerCase()
-    )
+    filtered = filtered.filter((post) => {
+      const docCategory = post.metadata.category
+
+      if (Array.isArray(docCategory)) {
+        return docCategory.some(
+          (c) => c.toLowerCase() === category.toLowerCase()
+        )
+      }
+
+      return docCategory?.toLowerCase() === category.toLowerCase()
+    })
   }
 
   if (!query) return filtered

@@ -83,11 +83,6 @@ const MENU_LINKS: CommandLinkItem[] = [
     href: "/blog",
     icon: RssIcon,
   },
-  {
-    title: "Sponsors",
-    href: "/sponsors",
-    icon: HeartIcon,
-  },
 ]
 
 const PORTFOLIO_LINKS: CommandLinkItem[] = [
