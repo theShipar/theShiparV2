@@ -8,7 +8,12 @@ export const USER: User = {
   gender: "male",
   pronouns: "he/him",
   bio: "Senior UI UX Designer",
-  flipSentences: ["Senior UI UX Designer", "Open Source Contributor"],
+  flipSentences: [
+    "5 yrs in product design industry",
+    "Senior UI UX Designer",
+    "Specialized in SaaS Design",
+    "UX Strategy to Maximize Revenue",
+  ],
   address: "Bangladesh",
   phoneNumber: "Kzg4MDEzMDc2MDcwMTQ=",
   email: "YWJ0YWhpLnNoaXBhckBnbWFpbC5jb20=",
