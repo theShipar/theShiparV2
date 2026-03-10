@@ -1,11 +1,11 @@
 "use client"
 
-import { PhoneIcon } from "lucide-react"
 import { useHotkeys } from "react-hotkeys-hook"
 import { toast } from "sonner"
 import { useWebHaptics } from "web-haptics/react"
 
 import { CopyButton } from "@/components/copy-button"
+import { Icons } from "@/components/icons"
 import { useIsClient } from "@/hooks/use-is-client"
 import { trackEvent } from "@/lib/events"
 import { copyToClipboardWithEvent } from "@/utils/copy"
@@ -43,17 +43,19 @@ export function PhoneItem({ phoneNumber }: PhoneItemProps) {
   return (
     <IntroItem className="group">
       <IntroItemIcon>
-        <PhoneIcon />
+        <Icons.whatsapp />
       </IntroItemIcon>
 
       <IntroItemContent>
         <IntroItemLink
-          href={isClient ? `tel:${phoneNumberDecoded}` : "#"}
+          href={isClient ? `https://wa.me/${phoneNumberDecoded}` : "#"}
           aria-label={
-            isClient ? `Call ${phoneNumberFormatted}` : "Phone number"
+            isClient
+              ? `Chat on WhatsApp with ${phoneNumberFormatted}`
+              : "WhatsApp contact"
           }
         >
-          {isClient ? phoneNumberFormatted : "[Phone protected]"}
+          {isClient ? phoneNumberFormatted : "[WhatsApp protected]"}
         </IntroItemLink>
       </IntroItemContent>
 

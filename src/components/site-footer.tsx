@@ -1,10 +1,6 @@
-import { RssIcon } from "lucide-react"
 import Link from "next/link"
 
-import { SITE_INFO, SOURCE_CODE_GITHUB_URL } from "@/config/site"
 import { cn } from "@/lib/utils"
-
-import { Icons } from "./icons"
 
 export function SiteFooter({
   width = "default",
@@ -22,79 +18,8 @@ export function SiteFooter({
           it works.” – Steve Jobs
         </p>
 
-        <div className="screen-line-before flex flex-wrap justify-center gap-2 py-3 font-mono text-xs text-muted-foreground sm:hidden">
-          <Link
-            className="font-medium transition-[color] hover:text-foreground"
-            href="/resume"
-          >
-            Resume
-          </Link>
-
-          <span className="opacity-50">•</span>
-
-          <Link
-            className="font-medium transition-[color] hover:text-foreground"
-            href="/projects"
-          >
-            Projects
-          </Link>
-
-          <span className="opacity-50">•</span>
-
-          <a
-            className="font-medium transition-[color] hover:text-foreground"
-            href="https://www.behance.net/theshipar"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Behance
-          </a>
-
-          <span className="opacity-50">•</span>
-
-          <a
-            className="font-medium transition-[color] hover:text-foreground"
-            href="https://github.com/theshipar"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-
-          <span className="opacity-50">•</span>
-
-          <a
-            className="font-medium transition-[color] hover:text-foreground"
-            href="https://facebook.com/theshipar"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Facebook
-          </a>
-
-          <span className="opacity-50">•</span>
-
-          <a
-            className="font-medium transition-[color] hover:text-foreground"
-            href="https://instagram.com/theshipar"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Instagram
-          </a>
-        </div>
-
         <div className="screen-line-before screen-line-after flex w-full before:z-1 after:z-1">
           <div className="mx-auto flex flex-wrap items-center justify-center gap-3 border-x border-edge bg-background px-4">
-            <Link
-              className="flex font-mono text-xs font-medium text-muted-foreground transition-[color] hover:text-foreground"
-              href="/resume"
-            >
-              Resume
-            </Link>
-
-            <Separator />
-
             <Link
               className="flex font-mono text-xs font-medium text-muted-foreground transition-[color] hover:text-foreground"
               href="/projects"
@@ -111,17 +36,6 @@ export function SiteFooter({
               rel="noopener noreferrer"
             >
               Behance
-            </a>
-
-            <Separator />
-
-            <a
-              className="flex font-mono text-xs font-medium text-muted-foreground transition-[color] hover:text-foreground"
-              href="https://github.com/theshipar"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
             </a>
 
             <Separator />

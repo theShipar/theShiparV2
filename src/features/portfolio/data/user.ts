@@ -29,10 +29,9 @@ export const USER: User = {
       experienceId: "nerdlab",
     },
   ],
-  about: `
-- **Design Engineer** with a passion for building beautiful and functional user interfaces.
-- Focused on **React**, **Next.js**, and **TypeScript**.
-`,
+  about: `I began my career in development, learning how digital products work beneath the surface. My curiosity about how users experience those products led me into motion design and eventually product-focused UI/UX.
+
+Along the way, I invested deeply in studying user behavior, psychology, and the strategies behind successful digital products. Learning from books, research, and the systems built by leading tech companies. Working closely with startups and developers shaped how I approach design today: creating scalable experiences that align user needs, business goals, and technical realities.`,
   avatar: "/images/theShipar.jpeg",
   ogImage: "/images/theShipar.jpeg",
   namePronunciationUrl: "",

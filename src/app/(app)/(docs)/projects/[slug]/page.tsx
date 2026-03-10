@@ -1,6 +1,7 @@
 import { getTableOfContents } from "fumadocs-core/content/toc"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
@@ -10,10 +11,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
+import { Icons } from "@/components/icons"
 import { InlineTOC } from "@/components/inline-toc"
 import { MDX } from "@/components/mdx"
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
+import { Tag } from "@/components/ui/tag"
 import { Prose } from "@/components/ui/typography"
 import { SITE_INFO, X_USERNAME } from "@/config/site"
 import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts"
@@ -232,7 +235,49 @@ export default async function Page({
           {doc.metadata.title}
         </h1>
 
-        <p className="text-muted-foreground">{doc.metadata.description}</p>
+        <p className="text-xl text-muted-foreground">
+          {doc.metadata.description}
+        </p>
+
+        {(doc.metadata.tags || doc.metadata.category) && (
+          <div className="flex flex-wrap gap-2 py-4">
+            {doc.metadata.tags?.map((tag) => <Tag key={tag}>{tag}</Tag>)}
+            {typeof doc.metadata.category === "string" ? (
+              <Tag>{doc.metadata.category}</Tag>
+            ) : (
+              doc.metadata.category?.map((cat) => <Tag key={cat}>{cat}</Tag>)
+            )}
+          </div>
+        )}
+
+        {doc.metadata.image && (
+          <div className="my-8">
+            <Image
+              src={doc.metadata.image}
+              alt={doc.metadata.title}
+              width={1200}
+              height={630}
+              className="rounded-lg border shadow-sm"
+              unoptimized
+            />
+          </div>
+        )}
+
+        {doc.metadata.figmaLink && (
+          <div className="my-8">
+            <Button variant="outline" size="sm" asChild>
+              <a
+                href={doc.metadata.figmaLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <Icons.figma className="size-4" />
+                View Figma
+              </a>
+            </Button>
+          </div>
+        )}
 
         <InlineTOC items={toc} />
 
