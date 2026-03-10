@@ -114,7 +114,7 @@
   /* zinc-100 */
   --accent: oklch(0.967 0.001 286.375);
 
-  --accent-muted: color-mix(in oklab, var(--accent) 50%, transparent);
+  --accent-muted: color-mix(in oklab, var(--accent) 5%, transparent);
 
   /* zinc-900 */
   --accent-foreground: oklch(0.21 0.006 285.885);

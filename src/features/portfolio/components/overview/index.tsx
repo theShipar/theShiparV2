@@ -60,27 +60,6 @@ export function Overview() {
           <PhoneItem phoneNumber={USER.phoneNumber} />
 
           <EmailItem email={USER.email} />
-
-          <IntroItem>
-            <IntroItemIcon>
-              <LinkIcon />
-            </IntroItemIcon>
-            <IntroItemContent>
-              <IntroItemLink
-                href={USER.website}
-                aria-label={`Personal website: ${urlToName(USER.website)}`}
-              >
-                {urlToName(USER.website)}
-              </IntroItemLink>
-            </IntroItemContent>
-          </IntroItem>
-
-          <IntroItem>
-            <IntroItemIcon>{getGenderIcon(USER.gender)}</IntroItemIcon>
-            <IntroItemContent aria-label={`Pronouns: ${USER.pronouns}`}>
-              {USER.pronouns}
-            </IntroItemContent>
-          </IntroItem>
         </div>
       </PanelContent>
     </Panel>
