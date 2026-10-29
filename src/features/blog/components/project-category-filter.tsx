@@ -21,6 +21,11 @@ const CATEGORIES = [
   { label: "Shopify", value: "shopify" },
   { label: "Webflow Template", value: "webflow template" },
   { label: "WordPress", value: "wordpress" },
+  { label: "Marine Industry", value: "marine industry" },
+  { label: "Automobile Industry", value: "automobile industry" },
+  { label: "Mental Wellbeing", value: "mental wellbeing" },
+  { label: "Fitness", value: "fitness" },
+  { label: "ERP", value: "erp" },
   { label: "Concept Design", value: "concept design" },
 ]
 
