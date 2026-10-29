@@ -511,3 +511,28 @@
     display: none;
   }
 }
+
+/* Recovery pages provide their own bottom actions. */
+body:has([data-not-found]) .mobile-project-actions {
+  display: none;
+}
+@keyframes not-found-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.not-found-track {
+  animation: not-found-scroll linear infinite;
+}
+.not-found-carousel:hover .not-found-track,
+.not-found-carousel:focus-within .not-found-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .not-found-track {
+    animation: none;
+  }
+  .not-found-carousel {
+    overflow-x: auto;
+  }
+}

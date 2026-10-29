@@ -1,10 +1,12 @@
 "use client"
 
+import { useEffect, useRef } from "react"
+
 import { cn } from "@/lib/utils"
 
 import { useSearchQuery } from "../hooks/use-search-query"
 
-const CATEGORIES = [
+export const CATEGORIES = [
   { label: "All", value: "all" },
   { label: "App Design", value: "app design" },
   { label: "SaaS", value: "saas" },
@@ -29,37 +31,86 @@ const CATEGORIES = [
   { label: "Concept Design", value: "concept design" },
 ]
 
-export function ProjectCategoryFilter() {
+export function ProjectCategoryFilter({
+  picker = false,
+  onSelect,
+}: {
+  picker?: boolean
+  onSelect?: () => void
+}) {
   const { category: currentCategory, setCategory } = useSearchQuery()
-
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (picker || window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return
+    const el = ref.current
+    if (!el) return
+    let frame = 0,
+      last = 0,
+      pauseUntil = 0
+    const pause = () => {
+      pauseUntil = performance.now() + 4000
+    }
+    const tick = (time: number) => {
+      const delta = last ? Math.min(time - last, 50) : 0
+      last = time
+      if (
+        time > pauseUntil &&
+        !el.matches(":hover") &&
+        !el.contains(document.activeElement)
+      ) {
+        el.scrollLeft += delta * 0.025
+        if (el.scrollLeft >= el.scrollWidth / 2)
+          el.scrollLeft -= el.scrollWidth / 2
+      }
+      frame = requestAnimationFrame(tick)
+    }
+    el.addEventListener("touchstart", pause, { passive: true })
+    el.addEventListener("wheel", pause, { passive: true })
+    frame = requestAnimationFrame(tick)
+    return () => {
+      cancelAnimationFrame(frame)
+      el.removeEventListener("touchstart", pause)
+      el.removeEventListener("wheel", pause)
+    }
+  }, [picker])
   return (
-    <div className="no-scrollbar flex flex-wrap gap-2 overflow-x-auto border-b border-edge px-2 py-3">
-      {CATEGORIES.map((category) => {
-        const isActive = (currentCategory || "all") === category.value
-        const isConceptDesign = category.value === "concept design"
-
-        return (
-          <button
-            key={category.value}
-            onClick={() => setCategory(category.value)}
-            className={cn(
-              "relative rounded-full border px-3 py-1 text-xs font-medium whitespace-nowrap transition-all",
-              isActive
-                ? "border-foreground bg-foreground text-background"
-                : isConceptDesign
-                  ? "border-transparent bg-background text-foreground hover:opacity-80"
-                  : "border-edge bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
-            )}
-          >
-            {!isActive && isConceptDesign && (
-              <span className="absolute inset-0 -z-1 rounded-full bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 p-px">
-                <span className="flex h-full w-full items-center justify-center rounded-full bg-background" />
-              </span>
-            )}
-            {category.label}
-          </button>
-        )
-      })}
+    <div
+      ref={ref}
+      aria-label="Project categories"
+      className={
+        picker
+          ? "flex flex-wrap gap-2"
+          : "no-scrollbar flex overflow-x-auto border-b border-edge py-3"
+      }
+    >
+      {(picker ? [0] : [0, 1]).map((copy) => (
+        <div
+          key={copy}
+          aria-hidden={copy === 1 ? true : undefined}
+          className={picker ? "contents" : "flex shrink-0 gap-2 px-1"}
+        >
+          {CATEGORIES.map((category) => (
+            <button
+              key={category.value}
+              tabIndex={copy === 1 ? -1 : 0}
+              aria-pressed={currentCategory === category.value}
+              onClick={() => {
+                void setCategory(category.value)
+                onSelect?.()
+              }}
+              className={cn(
+                "shrink-0 rounded-full border px-3 py-2 text-xs font-medium whitespace-nowrap",
+                currentCategory === category.value
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-edge bg-background text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+      ))}
     </div>
   )
 }
