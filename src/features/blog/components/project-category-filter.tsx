@@ -41,7 +41,11 @@ export function ProjectCategoryFilter({
   const { category: currentCategory, setCategory } = useSearchQuery()
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    if (picker || window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    if (
+      picker ||
+      window.matchMedia("(min-width: 768px)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
       return
     const el = ref.current
     if (!el) return
@@ -81,14 +85,21 @@ export function ProjectCategoryFilter({
       className={
         picker
           ? "flex flex-wrap gap-2"
-          : "no-scrollbar flex overflow-x-auto border-b border-edge py-3"
+          : "no-scrollbar flex overflow-x-auto border-b border-edge py-3 md:flex-wrap md:overflow-visible"
       }
     >
       {(picker ? [0] : [0, 1]).map((copy) => (
         <div
           key={copy}
           aria-hidden={copy === 1 ? true : undefined}
-          className={picker ? "contents" : "flex shrink-0 gap-2 px-1"}
+          className={
+            picker
+              ? "contents"
+              : cn(
+                  "flex shrink-0 gap-2 px-1 md:w-full md:shrink md:flex-wrap",
+                  copy === 1 && "md:hidden"
+                )
+          }
         >
           {CATEGORIES.map((category) => (
             <button
