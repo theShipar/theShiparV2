@@ -1,3 +1,7 @@
+"use client"
+
+import { usePathname } from "next/navigation"
+
 import { cn } from "@/lib/utils"
 
 export default function DocsLayout({
@@ -5,8 +9,14 @@ export default function DocsLayout({
 }: {
   children: React.ReactNode
 }) {
+  const isProjects = usePathname() === "/projects"
   return (
-    <div className="mx-auto border-x border-edge md:max-w-3xl">
+    <div
+      className={cn(
+        "mx-auto border-x border-edge transition-[max-width] duration-500 ease-in-out motion-reduce:transition-none",
+        isProjects ? "max-w-7xl" : "md:max-w-3xl"
+      )}
+    >
       <div
         className={cn(
           "screen-line-after h-8",

@@ -1,13 +1,14 @@
+"use client"
+
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { DesktopNav } from "@/components/desktop-nav"
 import { Icons } from "@/components/icons"
-import { NavItemGitHub } from "@/components/nav-item-github"
 import { MAIN_NAV } from "@/config/site"
 import { cn } from "@/lib/utils"
 
-import { SiteHeaderMark } from "./site-header-mark"
 import { ThemeToggle } from "./theme-toggle"
 import { Button } from "./ui/button"
 import { Separator } from "./ui/separator"
@@ -21,6 +22,7 @@ export function SiteHeader({
 }: {
   width?: "default" | "wide"
 }) {
+  const isProjects = usePathname() === "/projects"
   return (
     <header
       className={cn(
@@ -32,8 +34,8 @@ export function SiteHeader({
     >
       <div
         data-slot="site-header-container"
-        data-width={width}
-        className="screen-line-before screen-line-after mx-auto flex h-12 items-center justify-between gap-2 border-x border-edge px-2 after:z-1 after:transition-[background-color] data-[width=wide]:container sm:gap-4 data-[width=default]:md:max-w-3xl"
+        data-width={isProjects ? "projects" : width}
+        className="screen-line-before screen-line-after mx-auto flex h-12 items-center justify-between gap-2 border-x border-edge px-2 transition-[max-width] duration-500 ease-in-out after:z-1 after:transition-[background-color] data-[width=projects]:max-w-7xl data-[width=wide]:container motion-reduce:transition-none sm:gap-4 data-[width=default]:md:max-w-3xl"
         data-header-container
       >
         <Link
@@ -41,7 +43,7 @@ export function SiteHeader({
           href="/"
           aria-label="Home"
         >
-          <SiteHeaderMark />
+          <span className="font-bold tracking-tight">TheShipar</span>
         </Link>
 
         <div className="flex-1" />
@@ -51,15 +53,26 @@ export function SiteHeader({
           <Button
             asChild
             size="sm"
-            className="hidden h-8 gap-2 bg-[#25D366] px-3 text-xs font-semibold text-white hover:bg-[#25D366]/90 sm:flex"
+            className="group hidden h-8 gap-2 bg-[#25D366] px-3 text-xs font-semibold text-white hover:bg-[#25D366]/90 sm:flex"
           >
             <a
               href="http://wa.me/+8801307607014"
+              aria-label="DM me on WhatsApp"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Icons.whatsapp className="size-3.5" />
-              Dm me on WhatsApp
+              <span
+                className="flex items-center whitespace-nowrap"
+                aria-hidden="true"
+              >
+                DM me
+                <span className="inline-grid grid-cols-[1fr] opacity-100 transition-[grid-template-columns,opacity] duration-300 ease-in-out motion-reduce:transition-none md:grid-cols-[0fr] md:opacity-0 md:group-hover:grid-cols-[1fr] md:group-hover:opacity-100 md:group-focus-visible:grid-cols-[1fr] md:group-focus-visible:opacity-100">
+                  <span className="overflow-hidden">
+                    <span className="pl-1">on WhatsApp</span>
+                  </span>
+                </span>
+              </span>
             </a>
           </Button>
         </div>
@@ -73,13 +86,11 @@ export function SiteHeader({
           >
             <a
               href="https://figma.com/@theshipar"
+              aria-label="TheShipar on Figma"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Icons.figma className="size-3.5 -translate-y-px" />
-              <span className="text-[0.8125rem] text-muted-foreground tabular-nums">
-                124
-              </span>
             </a>
           </Button>
           <Separator

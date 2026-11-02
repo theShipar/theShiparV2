@@ -73,7 +73,11 @@ export function ExperiencePositionItem({
           )}
 
           <dl>
-            <dt className="sr-only">Employment Period</dt>
+            <dt className="sr-only">
+              {position.icon === "education"
+                ? "Study Period"
+                : "Employment Period"}
+            </dt>
             <dd className="flex items-center gap-0.5">
               <span>{start}</span>
               <span className="font-mono">—</span>

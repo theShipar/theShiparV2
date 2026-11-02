@@ -1,9 +1,8 @@
 import { DownloadIcon } from "lucide-react"
 import type { Metadata } from "next"
-import Image from "next/image"
 
 import { Button } from "@/components/base/ui/button"
-import { SITE_INFO } from "@/config/site"
+import { ResumeViewer } from "@/components/resume-viewer"
 
 export const metadata: Metadata = {
   title: "Resume",
@@ -33,18 +32,7 @@ export default function ResumePage() {
 
       <div className="screen-line-before screen-line-after p-4">
         <div className="mx-auto max-w-2xl space-y-4">
-          <div className="relative overflow-hidden rounded-xl border border-edge shadow-sm">
-            <Image
-              src="/images/Abtahi Shipar - UI UX Designer - CV.jpg"
-              alt="Abtahi Shipar - UI/UX Designer CV"
-              width={1200}
-              height={1697}
-              className="h-auto w-full object-contain"
-              priority
-              unoptimized
-            />
-            <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset dark:ring-white/10" />
-          </div>
+          <ResumeViewer />
 
           <Button
             className="h-12 w-full gap-2 rounded-xl"

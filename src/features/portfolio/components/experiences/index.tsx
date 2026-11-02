@@ -17,9 +17,11 @@ export function Experiences() {
       </PanelHeader>
 
       <div className="pr-2 pl-4">
-        {EXPERIENCES.map((experience) => (
-          <ExperienceItem key={experience.id} experience={experience} />
-        ))}
+        {EXPERIENCES.filter((experience) => experience.id !== "education").map(
+          (experience) => (
+            <ExperienceItem key={experience.id} experience={experience} />
+          )
+        )}
       </div>
     </Panel>
   )

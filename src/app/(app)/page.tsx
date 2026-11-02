@@ -5,6 +5,7 @@ import { About } from "@/features/portfolio/components/about"
 import { Blog } from "@/features/portfolio/components/blog"
 import { Bookmarks } from "@/features/portfolio/components/bookmarks"
 import { Certifications } from "@/features/portfolio/components/certifications"
+import { Education } from "@/features/portfolio/components/education"
 import { Experiences } from "@/features/portfolio/components/experiences"
 import { Overview } from "@/features/portfolio/components/overview"
 import { ProfileCover } from "@/features/portfolio/components/profile-cover"
@@ -49,6 +50,9 @@ export default function Page() {
         <Separator />
 
         <Experiences />
+        <Separator />
+
+        <Education />
         <Separator />
 
         <Certifications />

@@ -1,7 +1,7 @@
 import { TextFlip } from "@/components/ui/text-flip"
 import { USER } from "@/features/portfolio/data/user"
 
-import { AvatarElectricEffect } from "./avatar-electric-effect"
+import { ProfilePortrait } from "./profile-portrait"
 import { VerifiedIcon } from "./verified-icon"
 
 export function ProfileHeader() {
@@ -12,14 +12,7 @@ export function ProfileHeader() {
 
       <div className="shrink-0 border-r border-edge">
         <div className="mx-0.5 my-0.75">
-          <AvatarElectricEffect>
-            <img
-              className="size-30 rounded-full ring-1 ring-border ring-offset-2 ring-offset-background select-none sm:size-40"
-              alt="Avatar"
-              src={USER.avatar}
-              fetchPriority="high"
-            />
-          </AvatarElectricEffect>
+          <ProfilePortrait />
         </div>
       </div>
 
