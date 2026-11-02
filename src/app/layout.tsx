@@ -58,6 +58,7 @@ export const metadata: Metadata = {
   ],
   creator: "ncdai",
   openGraph: {
+    description: SITE_INFO.description,
     siteName: SITE_INFO.name,
     url: "/",
     type: "profile",
@@ -76,6 +77,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
+    description: SITE_INFO.description,
     card: "summary_large_image",
     site: X_USERNAME,
     creator: X_USERNAME,

@@ -59,7 +59,7 @@ export function SiteHeader({
               rel="noopener noreferrer"
             >
               <Icons.whatsapp className="size-3.5" />
-              DM me in Whatsapp
+              Dm me on WhatsApp
             </a>
           </Button>
         </div>

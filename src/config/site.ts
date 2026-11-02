@@ -3,9 +3,9 @@ import type { NavItem } from "@/types/nav"
 
 export const SITE_INFO = {
   name: USER.displayName,
-  url: process.env.APP_URL || "https://chanhdai.com",
+  url: "https://shipar.vercel.app",
   ogImage: USER.ogImage,
-  description: USER.bio,
+  description: "5 Years Making the Complex Feel Effortless.",
   keywords: USER.keywords,
 }
 
