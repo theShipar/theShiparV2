@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
 import { Tag } from "@/components/ui/tag"
 import { Prose } from "@/components/ui/typography"
+import { ZenraaProjectDetails } from "@/components/zenraa-project-details"
 import { SITE_INFO, X_USERNAME } from "@/config/site"
 import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts"
 import { LLMCopyButtonWithViewOptions } from "@/features/blog/components/post-page-actions"
@@ -225,61 +226,65 @@ export default async function Page({
         />
       </div>
 
-      <Prose className="px-4">
-        <h1 className="screen-line-after text-3xl font-semibold tracking-tight">
-          {doc.metadata.title}
-        </h1>
+      {slug === "zenraa" ? (
+        <ZenraaProjectDetails doc={doc} />
+      ) : (
+        <Prose className="px-4">
+          <h1 className="screen-line-after text-3xl font-semibold tracking-tight">
+            {doc.metadata.title}
+          </h1>
 
-        <p className="text-xl text-muted-foreground">
-          {doc.metadata.description}
-        </p>
+          <p className="text-xl text-muted-foreground">
+            {doc.metadata.description}
+          </p>
 
-        {(doc.metadata.tags || doc.metadata.category) && (
-          <div className="flex flex-wrap gap-2 py-4">
-            {doc.metadata.tags?.map((tag) => <Tag key={tag}>{tag}</Tag>)}
-            {typeof doc.metadata.category === "string" ? (
-              <Tag>{doc.metadata.category}</Tag>
-            ) : (
-              doc.metadata.category?.map((cat) => <Tag key={cat}>{cat}</Tag>)
-            )}
+          {(doc.metadata.tags || doc.metadata.category) && (
+            <div className="flex flex-wrap gap-2 py-4">
+              {doc.metadata.tags?.map((tag) => <Tag key={tag}>{tag}</Tag>)}
+              {typeof doc.metadata.category === "string" ? (
+                <Tag>{doc.metadata.category}</Tag>
+              ) : (
+                doc.metadata.category?.map((cat) => <Tag key={cat}>{cat}</Tag>)
+              )}
+            </div>
+          )}
+
+          {doc.metadata.image && slug !== "zenraa" && (
+            <div className="my-8">
+              <Image
+                src={doc.metadata.image}
+                alt={doc.metadata.title}
+                width={1200}
+                height={630}
+                className="rounded-lg border shadow-sm"
+                unoptimized
+              />
+            </div>
+          )}
+
+          {doc.metadata.figmaLink && (
+            <div className="my-8">
+              <Button variant="outline" size="sm" asChild>
+                <a
+                  href={doc.metadata.figmaLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Icons.figma className="size-4" />
+                  View Figma
+                </a>
+              </Button>
+            </div>
+          )}
+
+          <InlineTOC items={toc} />
+
+          <div>
+            <MDX code={doc.content} />
           </div>
-        )}
-
-        {doc.metadata.image && (
-          <div className="my-8">
-            <Image
-              src={doc.metadata.image}
-              alt={doc.metadata.title}
-              width={1200}
-              height={630}
-              className="rounded-lg border shadow-sm"
-              unoptimized
-            />
-          </div>
-        )}
-
-        {doc.metadata.figmaLink && (
-          <div className="my-8">
-            <Button variant="outline" size="sm" asChild>
-              <a
-                href={doc.metadata.figmaLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <Icons.figma className="size-4" />
-                View Figma
-              </a>
-            </Button>
-          </div>
-        )}
-
-        <InlineTOC items={toc} />
-
-        <div>
-          <MDX code={doc.content} />
-        </div>
-      </Prose>
+        </Prose>
+      )}
 
       <div className="screen-line-before h-4 w-full" />
     </>
