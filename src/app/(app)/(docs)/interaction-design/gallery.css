@@ -1,36 +1,92 @@
-/* Size the gallery from the space left by the actual header and footer. */
-html:root body:has(.interaction-gallery) {
-  display: flex;
-  flex-direction: column;
-  height: 100svh;
-  height: 100dvh;
+body:has(.interaction-gallery) > footer,
+main:has(.interaction-gallery) .screen-line-after.h-8 {
+  display: none;
+}
+
+body:has(.interaction-gallery) > header {
+  position: fixed;
+  inset: 0 0 auto;
+  color: var(--foreground);
+  padding: max(0.5rem, env(safe-area-inset-top)) 2vw 1rem;
+}
+body:has(.interaction-gallery) > header {
+  background: transparent;
+  isolation: isolate;
+}
+body:has(.interaction-gallery) > header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background: var(--background);
+  backdrop-filter: blur(6px);
+  mask-image: linear-gradient(to bottom, black, rgb(0 0 0 / 82%) 38%, transparent);
+}
+body:has(.interaction-gallery) header :is(a, button) { box-shadow: none; }
+@media (width < 48rem) {
+  body:has(.interaction-gallery) > header { padding-bottom: 2rem; }
+  body:has(.interaction-gallery) > header[data-menu-open="true"]::before {
+    mask-image: linear-gradient(to bottom, black, rgb(0 0 0 / 78%) 65%, transparent);
+  }
+  body:has(.interaction-gallery) #mobile-navigation {
+    border: 0;
+    padding: 26px 4px 0;
+  }
+}
+body:has(.interaction-gallery) [data-header-container] {
+  max-width: none;
+  border: 0;
+}
+body:has(.interaction-gallery) [data-header-container]::before,
+body:has(.interaction-gallery) [data-header-container]::after {
+  display: none;
 }
 body:has(.interaction-gallery) main {
-  flex: 1;
-  min-height: 0;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr);
-}
-main:has(.interaction-gallery) > div,
-main:has(.interaction-gallery) > div > div {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+  position: fixed;
+  inset: 0;
+  padding: 0;
 }
 main:has(.interaction-gallery) > div > div {
-  width: 100%;
-  flex: 1;
+  max-width: none;
+  border: 0;
 }
 .interaction-gallery {
-  height: 0;
-  flex: 1;
-  min-height: 0;
+  width: 100%;
+  height: 100dvh;
+  --tile-hover: #e2e2e4;
+  background: #ededee;
+  color: #d0d0d3;
+}
+.dark .interaction-gallery {
+  --tile-hover: #303035;
+  background: #19191b;
+  color: #353537;
+}
+.interaction-viewer {
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  max-width: none;
+  max-height: none;
+  background: transparent;
+  border-radius: 12px;
+  overflow: visible;
+}
+.interaction-viewer::backdrop {
+  background: rgb(8 8 10 / 55%);
+  backdrop-filter: blur(18px);
+}
+.interaction-viewer video {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 96vw;
+  max-height: calc(100dvh - 120px);
+  border-radius: 12px;
+  object-fit: contain;
 }
 
-body:has(.interaction-gallery) > :is(header, footer, .mobile-project-actions) {
-  flex: none;
-}
-
-body:has(.interaction-gallery) .mobile-project-actions {
-  position: static;
+body:has(.interaction-gallery) header nav a {
+  color: var(--foreground);
 }

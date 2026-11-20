@@ -1,8 +1,8 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useRef, useState } from "react"
 
 import { DesktopNav } from "@/components/desktop-nav"
 import { Icons } from "@/components/icons"
@@ -12,20 +12,26 @@ import { cn } from "@/lib/utils"
 import { ThemeToggle } from "./theme-toggle"
 import { Button } from "./ui/button"
 
-const MobileNav = dynamic(() =>
-  import("@/components/mobile-nav-v2").then((mod) => mod.MobileNavV2)
-)
-
 export function SiteHeader({
   width = "default",
 }: {
   width?: "default" | "wide"
 }) {
   const pathname = usePathname()
+  const [menuPath, setMenuPath] = useState<string | null>(null)
+  const open = menuPath === pathname
+  const trigger = useRef<HTMLButtonElement>(null)
   const wideListing =
     pathname === "/projects" || pathname === "/interaction-design"
   return (
     <header
+      data-menu-open={open}
+      onKeyDown={(event) => {
+        if (open && event.key === "Escape") {
+          setMenuPath(null)
+          trigger.current?.focus()
+        }
+      }}
       className={cn(
         "sticky top-0 z-50 max-w-screen overflow-x-hidden bg-background px-2 pt-2"
         // "data-[affix=true]:shadow-[0_0_16px_0_black]/8 dark:data-[affix=true]:shadow-[0_0_16px_0_black]",
@@ -80,7 +86,52 @@ export function SiteHeader({
 
         <div className="flex items-center">
           <ThemeToggle />
-          <MobileNav items={MAIN_NAV} />
+          <Button
+            ref={trigger}
+            variant="ghost"
+            size="icon-sm"
+            className="md:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuPath(open ? null : pathname)}
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <path d={open ? "M5 5l14 14M19 5L5 19" : "M3 8h18M3 16h18"} />
+            </svg>
+          </Button>
+        </div>
+      </div>
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none md:hidden",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
+        inert={!open}
+      >
+        <div className="overflow-hidden">
+          <nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+            className="flex flex-col items-end border-x border-b border-edge p-6 text-right text-[22px] leading-[42px]"
+          >
+            {MAIN_NAV.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuPath(null)}
+              >
+                {link.title}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </header>

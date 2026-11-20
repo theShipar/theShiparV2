@@ -17,8 +17,9 @@
     "url": "git+https://github.com/theShipar/theShiparV2.git"
   },
   "scripts": {
-    "dev": "portless ncdai next dev",
-    "build": "next build",
+    "prepare:gallery": "cat media/interaction-15/part-aa media/interaction-15/part-ab > public/interaction-design/full/15.mp4",
+    "dev": "npm run prepare:gallery && portless ncdai next dev",
+    "build": "npm run prepare:gallery && next build",
     "start": "next start",
     "preview": "next build && portless ncdai next start",
     "lint": "eslint .",

@@ -11,6 +11,7 @@ type Point = { x: number; y: number }
 
 export function InteractionGallery() {
   const surface = useRef<HTMLCanvasElement>(null)
+  const viewer = useRef<HTMLDialogElement>(null)
   useEffect(() => {
     const canvas = surface.current!
     const ctx = canvas.getContext("2d")
@@ -28,12 +29,14 @@ export function InteractionGallery() {
       lastMove = 0
     let velocity = { x: 0, y: 0 }
     let settle: ReturnType<typeof setTimeout>
+    let hoverFill = ""
     let border = "",
       background = ""
 
     function colors() {
       const style = getComputedStyle(canvas)
       border = style.color
+      hoverFill = style.getPropertyValue("--tile-hover").trim()
       background = style.backgroundColor
     }
     const theme = new MutationObserver(colors)
@@ -45,9 +48,10 @@ export function InteractionGallery() {
     function resize() {
       width = canvas.clientWidth
       height = canvas.clientHeight
-      const ratio = Math.min(devicePixelRatio, 1.5)
+      const ratio = Math.min(devicePixelRatio, 2)
       canvas.width = Math.round(width * ratio)
       canvas.height = Math.round(height * ratio)
+      ctx!.imageSmoothingQuality = "high"
       ctx!.setTransform(ratio, 0, 0, ratio, 0, 0)
       base = clamp(185, 345, width / 4)
     }
@@ -75,8 +79,47 @@ export function InteractionGallery() {
       return (span * (1 + n - 0.035 * Math.pow(clamp(-1, 1, n), 3))) / 2
     }
 
+    const tiles: {
+      x: number
+      y: number
+      w: number
+      h: number
+      index: number
+    }[] = []
+    let tap: Point | null = null
+    const order = Array.from({ length: clipCount }, (_, i) => i)
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[order[i], order[j]] = [order[j], order[i]]
+    }
+    let hover: Point | null = null
+    const clearHover = () => {
+      hover = null
+    }
+    const bend = (x: number, y: number) =>
+      height / 2 + (y - height / 2) * curvature(x / width)
+
+    const curvature = (fraction: number) => 1 + 0.038 * (2 * fraction - 1) ** 2
+    function openAt(x: number, y: number) {
+      const flatY = height / 2 + (y - height / 2) / curvature(x / width)
+      const tile = tiles.find(
+        (t) => x >= t.x && x < t.x + t.w && flatY >= t.y && flatY < t.y + t.h
+      )
+      if (!tile || !viewer.current) return
+      const video = viewer.current.querySelector("video")!
+      video.src = `/interaction-design/full/${String(tile.index + 1).padStart(2, "0")}.mp4`
+      videos.forEach((v) => v.pause())
+      viewer.current.showModal()
+    }
     function draw(time: number, delta: number) {
-      if (!visible || document.hidden || !width || !height) return
+      if (
+        viewer.current?.open ||
+        !visible ||
+        document.hidden ||
+        !width ||
+        !height
+      )
+        return
       const blend = reduced.matches
         ? 1
         : 1 - Math.exp(-Math.min(delta, 64) / 48)
@@ -92,6 +135,7 @@ export function InteractionGallery() {
       const size = base * camera.zoom
       const left = camera.x - width / (2 * size),
         top = camera.y - height / (2 * size)
+      tiles.length = 0
       const used = new Set<number>()
       ctx!.fillStyle = background
       ctx!.fillRect(0, 0, width, height)
@@ -109,16 +153,50 @@ export function InteractionGallery() {
         ) {
           const x = project((col - left) * size, width)
           const w = project((col + 1 - left) * size, width) - x
+          const hoverY = hover
+            ? height / 2 + (hover.y - height / 2) / curvature(hover.x / width)
+            : 0
+          const highlighted =
+            hover &&
+            hover.x >= x &&
+            hover.x < x + w &&
+            hoverY >= y &&
+            hoverY < y + h
+          ctx!.beginPath()
+          ctx!.moveTo(x, bend(x, y))
+          ctx!.lineTo(x + w, bend(x + w, y))
+          ctx!.lineTo(x + w, bend(x + w, y + h))
+          ctx!.lineTo(x, bend(x, y + h))
+          ctx!.closePath()
+          if (highlighted) {
+            ctx!.fillStyle = hoverFill
+            ctx!.fill()
+          }
           ctx!.strokeStyle = border
-          ctx!.strokeRect(x, y, w, h)
-          const index = (((col + 7 * row) % clipCount) + clipCount) % clipCount
+          ctx!.stroke()
+          const index =
+            order[(((col + 7 * row) % clipCount) + clipCount) % clipCount]
+          tiles.push({ x, y, w, h, index })
           used.add(index)
           const v = player(index)
           if (v.readyState < 2 || !v.videoWidth) continue
           const fit = 0.84 * Math.min(w / v.videoWidth, h / v.videoHeight)
           const dw = v.videoWidth * fit,
             dh = v.videoHeight * fit
-          ctx!.drawImage(v, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh)
+          const cx = x + w / 2,
+            cy = y + h / 2
+          ctx!.save()
+          ctx!.translate(cx, bend(cx, cy))
+          ctx!.transform(
+            1,
+            (bend(x + w, cy) - bend(x, cy)) / w,
+            0,
+            curvature(cx / width),
+            0,
+            0
+          )
+          ctx!.drawImage(v, -dw / 2, -dh / 2, dw, dh)
+          ctx!.restore()
         }
       }
       videos.forEach((video, index) => {
@@ -158,14 +236,20 @@ export function InteractionGallery() {
     function down(e: PointerEvent) {
       if (e.button !== 0) return
       pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      tap = pointers.size === 1 ? { x: e.clientX, y: e.clientY } : null
       canvas.setPointerCapture(e.pointerId)
       velocity = { x: 0, y: 0 }
       lastMove = e.timeStamp
     }
     function move(e: PointerEvent) {
+      hover =
+        e.pointerType === "mouse" && !e.buttons
+          ? { x: e.offsetX, y: e.offsetY }
+          : null
       const old = pointers.get(e.pointerId)
       if (!old) return
       const point = { x: e.clientX, y: e.clientY }
+      if (tap && Math.hypot(point.x - tap.x, point.y - tap.y) > 6) tap = null
       pointers.set(e.pointerId, point)
       const dx = old.x - point.x,
         dy = old.y - point.y
@@ -190,6 +274,11 @@ export function InteractionGallery() {
     }
     function end(e: PointerEvent) {
       if (!pointers.delete(e.pointerId)) return
+      if (tap && e.type === "pointerup") {
+        const rect = canvas.getBoundingClientRect()
+        openAt(e.clientX - rect.left, e.clientY - rect.top)
+      }
+      tap = null
       if (
         !pointers.size &&
         e.type === "pointerup" &&
@@ -221,7 +310,8 @@ export function InteractionGallery() {
     }
     function key(e: KeyboardEvent) {
       const rect = canvas.getBoundingClientRect()
-      if (["=", "+", "-"].includes(e.key))
+      if (e.key === "Enter") openAt(width / 2, height / 2)
+      else if (["=", "+", "-"].includes(e.key))
         zoom(e.key === "-" ? 0.85 : 1.18, {
           x: rect.left + width / 2,
           y: rect.top + height / 2,
@@ -233,6 +323,7 @@ export function InteractionGallery() {
       else return
       e.preventDefault()
     }
+    canvas.addEventListener("pointerleave", clearHover)
     canvas.addEventListener("pointerdown", down)
     canvas.addEventListener("pointermove", move)
     canvas.addEventListener("pointerup", end)
@@ -246,6 +337,7 @@ export function InteractionGallery() {
       intersection.disconnect()
       theme.disconnect()
       document.removeEventListener("visibilitychange", pauseHidden)
+      canvas.removeEventListener("pointerleave", clearHover)
       canvas.removeEventListener("pointerdown", down)
       canvas.removeEventListener("pointermove", move)
       canvas.removeEventListener("pointerup", end)
@@ -260,12 +352,36 @@ export function InteractionGallery() {
     }
   }, [])
   return (
-    <canvas
-      ref={surface}
-      data-lenis-prevent
-      tabIndex={0}
-      aria-label="Interaction Design video gallery. Drag or use arrow keys to pan. Pinch, scroll the mouse wheel, or use plus and minus to zoom."
-      className="interaction-gallery block w-full cursor-grab touch-none bg-background text-edge active:cursor-grabbing"
-    />
+    <>
+      <canvas
+        ref={surface}
+        data-lenis-prevent
+        tabIndex={0}
+        aria-label="Interaction Design video gallery. Drag or use arrow keys to pan. Pinch, scroll the mouse wheel, or use plus and minus to zoom. Press Enter to open the center tile."
+        className="interaction-gallery block w-full cursor-grab touch-none bg-background text-edge active:cursor-grabbing"
+      />
+      <dialog
+        ref={viewer}
+        className="interaction-viewer"
+        aria-label="Interaction video"
+        onClose={(e) => {
+          const video = e.currentTarget.querySelector("video")!
+          video.pause()
+          video.removeAttribute("src")
+          video.load()
+          surface.current?.focus()
+        }}
+      >
+        <video muted autoPlay playsInline loop />
+        <button
+          type="button"
+          onClick={() => viewer.current?.close()}
+          aria-label="Close video"
+          className="absolute right-0 bottom-full mb-2 grid size-12 place-items-center rounded-full bg-black/50 text-[28px] leading-none text-white backdrop-blur-lg dark:bg-white/50 dark:text-black"
+        >
+          ×
+        </button>
+      </dialog>
+    </>
   )
 }

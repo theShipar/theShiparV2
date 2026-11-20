@@ -42,3 +42,6 @@ next-env.d.ts
 
 # ncdai
 .ncdai
+
+# Assembled from the tracked original video parts
+/public/interaction-design/full/15.mp4
