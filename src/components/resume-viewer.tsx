@@ -27,7 +27,7 @@ export function ResumeViewer() {
       <DialogTrigger asChild>
         <button
           type="button"
-          className="block w-full cursor-zoom-in overflow-hidden rounded-xl outline-offset-4 focus-visible:outline-2"
+          className="block w-full cursor-zoom-in overflow-hidden outline-offset-4 focus-visible:outline-2"
           aria-label="Open resume in full screen"
         >
           <Image

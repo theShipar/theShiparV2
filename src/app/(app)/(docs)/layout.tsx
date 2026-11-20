@@ -9,12 +9,14 @@ export default function DocsLayout({
 }: {
   children: React.ReactNode
 }) {
-  const isProjects = usePathname() === "/projects"
+  const pathname = usePathname()
+  const wideListing =
+    pathname === "/projects" || pathname === "/interaction-design"
   return (
     <div
       className={cn(
         "mx-auto border-x border-edge transition-[max-width] duration-500 ease-in-out motion-reduce:transition-none",
-        isProjects ? "max-w-7xl" : "md:max-w-3xl"
+        wideListing ? "max-w-7xl" : "md:max-w-3xl"
       )}
     >
       <div

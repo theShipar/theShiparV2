@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Create Group",
+    "slug": "create-group",
+    "live": "https://create-group-interaction.vercel.app/",
+    "repo": "https://github.com/theShipar/create-group-interaction.git"
+  },
+  {
+    "name": "Add to Bag",
+    "slug": "add-to-bag",
+    "live": "https://addtobag-nine.vercel.app/",
+    "repo": "https://github.com/theShipar/add-to-bag.git"
+  },
+  {
+    "name": "Writing Tool Interaction",
+    "slug": "writing-tool-interaction",
+    "live": "https://writingtoolinteraction.vercel.app/",
+    "repo": "https://github.com/theShipar/writing-tool-interaction.git"
+  },
+  {
+    "name": "OTP Input V1",
+    "slug": "otp-input-v1",
+    "live": "https://otp-input-v1.vercel.app/",
+    "repo": "https://github.com/theShipar/modern-otp-input.git"
+  },
+  {
+    "name": "OTP Input V2",
+    "slug": "otp-input-v2",
+    "live": "https://otp-input-v2.vercel.app/",
+    "repo": "https://github.com/theShipar/modern-otp-input-v2.git"
+  },
+  {
+    "name": "Color Swatcher",
+    "slug": "color-swatcher",
+    "live": "https://color-swatcher.vercel.app/",
+    "repo": "https://github.com/theShipar/color-swatcher.git"
+  },
+  {
+    "name": "Voice Recorder",
+    "slug": "voice-recorder",
+    "live": "https://voicemessage.vercel.app/",
+    "repo": "https://github.com/theShipar/voice-record.git"
+  }
+]

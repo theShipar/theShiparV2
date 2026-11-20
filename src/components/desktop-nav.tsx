@@ -10,7 +10,7 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
 
   return (
     <Nav
-      className="gap-5 max-md:hidden [&_a]:py-3 [&_a]:text-xs [&_a]:whitespace-nowrap"
+      className="gap-[1.875rem] max-md:hidden [&_a]:py-3 [&_a]:text-xs [&_a]:whitespace-nowrap"
       items={items}
       activeId={pathname}
     />

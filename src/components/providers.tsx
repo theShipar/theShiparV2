@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes"
 import { TooltipProvider as BaseTooltipProvider } from "@/components/base/ui/tooltip"
 import { TooltipProvider as RadixTooltipProvider } from "@/components/ui/tooltip"
 
+import { SmoothScroll } from "./smooth-scroll"
 import { Toaster } from "./ui/sonner"
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -31,6 +32,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           </BaseTooltipProvider>
         </AppProgressProvider>
 
+        <SmoothScroll />
         <Toaster position="top-center" />
       </ThemeProvider>
     </JotaiProvider>

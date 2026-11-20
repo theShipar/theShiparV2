@@ -24,8 +24,8 @@ export const MAIN_NAV: NavItem[] = [
     href: "/components",
   },
   {
-    title: "Case Studies",
-    href: "/case-studies",
+    title: "Interaction Design",
+    href: "/interaction-design",
   },
   {
     title: "Resume",

@@ -1,0 +1,36 @@
+/* Size the gallery from the space left by the actual header and footer. */
+html:root body:has(.interaction-gallery) {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  height: 100dvh;
+}
+body:has(.interaction-gallery) main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+}
+main:has(.interaction-gallery) > div,
+main:has(.interaction-gallery) > div > div {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+main:has(.interaction-gallery) > div > div {
+  width: 100%;
+  flex: 1;
+}
+.interaction-gallery {
+  height: 0;
+  flex: 1;
+  min-height: 0;
+}
+
+body:has(.interaction-gallery) > :is(header, footer, .mobile-project-actions) {
+  flex: none;
+}
+
+body:has(.interaction-gallery) .mobile-project-actions {
+  position: static;
+}

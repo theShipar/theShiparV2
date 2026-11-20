@@ -38,7 +38,7 @@ export const USER: User = {
 
 Along the way, I invested deeply in studying user behavior, psychology, and the strategies behind successful digital products. Learning from books, research, and the systems built by leading tech companies. Working closely with startups and developers shaped how I approach design today: creating scalable experiences that align user needs, business goals, and technical realities.`,
   avatar: "/images/theShipar.jpeg",
-  ogImage: "/images/theShipar.jpeg",
+  ogImage: "/portfolio-previews/barakah-share.jpg",
   namePronunciationUrl: "",
   timeZone: "Asia/Dhaka",
   keywords: ["theshipar", "abtahi shipar", "abtahi", "shipar"],

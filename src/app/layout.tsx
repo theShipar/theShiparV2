@@ -52,11 +52,11 @@ export const metadata: Metadata = {
   keywords: SITE_INFO.keywords,
   authors: [
     {
-      name: "ncdai",
+      name: USER.displayName,
       url: SITE_INFO.url,
     },
   ],
-  creator: "ncdai",
+  creator: USER.displayName,
   openGraph: {
     description: SITE_INFO.description,
     siteName: SITE_INFO.name,
@@ -84,10 +84,11 @@ export const metadata: Metadata = {
     images: [SITE_INFO.ogImage],
   },
   icons: {
+    apple: "/portfolio-previews/shipar-180.png",
     icon: [
       {
-        url: "/favicon.ico",
-        sizes: "any",
+        url: "/portfolio-previews/shipar-192.png",
+        sizes: "192x192",
       },
     ],
   },

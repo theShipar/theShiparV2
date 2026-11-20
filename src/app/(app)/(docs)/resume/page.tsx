@@ -30,21 +30,21 @@ export default function ResumePage() {
         </p>
       </div>
 
-      <div className="screen-line-before screen-line-after p-4">
-        <div className="mx-auto max-w-2xl space-y-4">
-          <ResumeViewer />
-
-          <Button
-            className="h-12 w-full gap-2 rounded-xl"
-            render={
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" />
-            }
-          >
-            <DownloadIcon className="size-4" />
-            Download Resume
-          </Button>
-        </div>
+      <div className="screen-line-before screen-line-after">
+        <ResumeViewer />
       </div>
+
+      <section aria-label="Resume download" className="screen-line-after p-4">
+        <Button
+          className="h-12 w-full gap-2 rounded-xl"
+          render={
+            <a href={resumeUrl} target="_blank" rel="noopener noreferrer" />
+          }
+        >
+          <DownloadIcon className="size-4" />
+          Download Resume
+        </Button>
+      </section>
     </div>
   )
 }

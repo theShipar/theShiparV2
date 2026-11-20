@@ -9,25 +9,19 @@ export default function manifest(): MetadataRoute.Manifest {
     description: SITE_INFO.description,
     icons: [
       {
-        src: "https://assets.chanhdai.com/images/icon-vector.svg",
-        type: "image/svg+xml",
-        sizes: "any",
-        purpose: "any",
-      },
-      {
-        src: "https://assets.chanhdai.com/images/icon-192x192.png",
+        src: "/portfolio-previews/shipar-192.png",
         type: "image/png",
         sizes: "192x192",
         purpose: "any",
       },
       {
-        src: "https://assets.chanhdai.com/images/icon-512x512.png",
+        src: "/portfolio-previews/shipar-512.png",
         type: "image/png",
         sizes: "512x512",
         purpose: "any",
       },
       {
-        src: "https://assets.chanhdai.com/images/maskable-icon.png",
+        src: "/portfolio-previews/shipar-512.png",
         type: "image/png",
         sizes: "512x512",
         purpose: "maskable",
@@ -39,28 +33,25 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     screenshots: [
       {
-        src: "https://assets.chanhdai.com/images/screenshot-mobile-dark.webp?v=7",
+        src: "/portfolio-previews/projects-mobile.webp",
         type: "image/webp",
         sizes: "440x956",
         form_factor: "narrow",
+        label: "Abtahi Shipar’s design projects",
       },
       {
-        src: "https://assets.chanhdai.com/images/screenshot-mobile-light.webp?v=7",
+        src: "/portfolio-previews/components-mobile.webp",
         type: "image/webp",
         sizes: "440x956",
         form_factor: "narrow",
+        label: "Interactive component gallery",
       },
       {
-        src: "https://assets.chanhdai.com/images/screenshot-desktop-dark.webp?v=7",
+        src: "/portfolio-previews/projects-desktop.webp",
         type: "image/webp",
-        sizes: "1920x1080",
+        sizes: "1440x900",
         form_factor: "wide",
-      },
-      {
-        src: "https://assets.chanhdai.com/images/screenshot-desktop-light.webp?v=7",
-        type: "image/webp",
-        sizes: "1920x1080",
-        form_factor: "wide",
+        label: "Abtahi Shipar’s desktop project gallery",
       },
     ],
   }

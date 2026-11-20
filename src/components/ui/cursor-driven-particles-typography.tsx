@@ -9,6 +9,7 @@ function cn(...classes: (string | undefined)[]) {
 export interface CursorDrivenParticleTypographyProps {
   className?: string
   text: string
+  baselineFraction?: number
   fontSize?: number
   fontFamily?: string
   particleSize?: number
@@ -98,6 +99,7 @@ class Particle {
 export function CursorDrivenParticleTypography({
   className,
   text,
+  baselineFraction = 0.5,
   fontSize = 120,
   fontFamily = "Inter, sans-serif",
   particleSize = 1.5,
@@ -152,7 +154,11 @@ export function CursorDrivenParticleTypography({
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
 
-      ctx.fillText(text, containerWidth / 2, containerHeight / 2)
+      const measuredWidth = ctx.measureText(text).width
+      if (measuredWidth > containerWidth * 0.94) {
+        ctx.font = `bold ${(effectiveFontSize * containerWidth * 0.94) / measuredWidth}px ${fontFamily}`
+      }
+      ctx.fillText(text, containerWidth / 2, containerHeight * baselineFraction)
 
       const textCoordinates = ctx.getImageData(
         0,
@@ -222,18 +228,19 @@ export function CursorDrivenParticleTypography({
       resizeObserver.observe(containerRef.current)
     }
 
-    canvas.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("mouseleave", handleMouseLeave)
 
     return () => {
       clearTimeout(timeoutId)
       resizeObserver.disconnect()
-      canvas.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mousemove", handleMouseMove)
       canvas.removeEventListener("mouseleave", handleMouseLeave)
       cancelAnimationFrame(animationFrameId)
     }
   }, [
     text,
+    baselineFraction,
     fontSize,
     fontFamily,
     particleSize,

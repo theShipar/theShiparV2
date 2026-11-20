@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils"
 
 import { ThemeToggle } from "./theme-toggle"
 import { Button } from "./ui/button"
-import { Separator } from "./ui/separator"
 
 const MobileNav = dynamic(() =>
   import("@/components/mobile-nav-v2").then((mod) => mod.MobileNavV2)
@@ -22,7 +21,9 @@ export function SiteHeader({
 }: {
   width?: "default" | "wide"
 }) {
-  const isProjects = usePathname() === "/projects"
+  const pathname = usePathname()
+  const wideListing =
+    pathname === "/projects" || pathname === "/interaction-design"
   return (
     <header
       className={cn(
@@ -34,7 +35,7 @@ export function SiteHeader({
     >
       <div
         data-slot="site-header-container"
-        data-width={isProjects ? "projects" : width}
+        data-width={wideListing ? "projects" : width}
         className="screen-line-before screen-line-after mx-auto flex h-12 items-center justify-between gap-2 border-x border-edge px-2 transition-[max-width] duration-500 ease-in-out after:z-1 after:transition-[background-color] data-[width=projects]:max-w-7xl data-[width=wide]:container motion-reduce:transition-none sm:gap-4 data-[width=default]:md:max-w-3xl"
         data-header-container
       >
@@ -78,25 +79,6 @@ export function SiteHeader({
         </div>
 
         <div className="flex items-center">
-          <Button
-            className="gap-1.5 border-none pr-1.5 pl-2"
-            variant="ghost"
-            size="sm"
-            asChild
-          >
-            <a
-              href="https://figma.com/@theshipar"
-              aria-label="TheShipar on Figma"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icons.figma className="size-3.5 -translate-y-px" />
-            </a>
-          </Button>
-          <Separator
-            orientation="vertical"
-            className="mx-2 data-vertical:h-4 data-vertical:self-center"
-          />
           <ThemeToggle />
           <MobileNav items={MAIN_NAV} />
         </div>

@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 
-import { ComingSoon } from "@/components/coming-soon"
+import { CoverGallery } from "@/components/cover-gallery"
 
 export const metadata: Metadata = {
   title: "Components",
-  description: "Components — coming soon.",
+  description: "Interactive cover gallery.",
   alternates: { canonical: "/components" },
 }
 
 export default function ComponentsPage() {
-  return <ComingSoon title="Components" />
+  return <CoverGallery />
 }
