@@ -1,7 +1,7 @@
 "use client"
 
 import { gsap } from "gsap"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const clipCount = 19
 const minZoom = 0.78
@@ -12,6 +12,48 @@ type Point = { x: number; y: number }
 export function InteractionGallery() {
   const surface = useRef<HTMLCanvasElement>(null)
   const viewer = useRef<HTMLDialogElement>(null)
+  const [source, setSource] = useState("")
+  const [progress, setProgress] = useState(1)
+  const [ready, setReady] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  useEffect(() => {
+    if (!source) return
+    const video = viewer.current!.querySelector("video")!
+    const request = new XMLHttpRequest()
+    let objectUrl = ""
+    request.open("GET", source)
+    request.responseType = "blob"
+    request.onprogress = (event) => {
+      if (event.lengthComputable && event.total > 0) {
+        setProgress(
+          Math.max(
+            1,
+            Math.min(99, Math.floor((100 * event.loaded) / event.total))
+          )
+        )
+      }
+    }
+    request.onerror = () => setFailed(true)
+    request.onload = () => {
+      if (request.status !== 200) {
+        setFailed(true)
+        return
+      }
+      setProgress(100)
+      objectUrl = URL.createObjectURL(request.response)
+      video.src = objectUrl
+    }
+    request.send()
+    return () => {
+      request.abort()
+      video.pause()
+      video.removeAttribute("src")
+      video.load()
+      if (objectUrl) URL.revokeObjectURL(objectUrl)
+    }
+  }, [source])
+
   useEffect(() => {
     const canvas = surface.current!
     const ctx = canvas.getContext("2d")
@@ -106,8 +148,12 @@ export function InteractionGallery() {
         (t) => x >= t.x && x < t.x + t.w && flatY >= t.y && flatY < t.y + t.h
       )
       if (!tile || !viewer.current) return
-      const video = viewer.current.querySelector("video")!
-      video.src = `/interaction-design/full/${String(tile.index + 1).padStart(2, "0")}.mp4`
+      setReady(false)
+      setFailed(false)
+      setProgress(1)
+      setSource(
+        `/interaction-design/full/${String(tile.index + 1).padStart(2, "0")}.mp4`
+      )
       videos.forEach((v) => v.pause())
       viewer.current.showModal()
     }
@@ -364,22 +410,56 @@ export function InteractionGallery() {
         ref={viewer}
         className="interaction-viewer"
         aria-label="Interaction video"
-        onClose={(e) => {
-          const video = e.currentTarget.querySelector("video")!
-          video.pause()
-          video.removeAttribute("src")
-          video.load()
+        onClose={() => {
+          setSource("")
           surface.current?.focus()
         }}
       >
-        <video muted autoPlay playsInline loop />
+        <video
+          muted
+          autoPlay
+          playsInline
+          loop
+          style={{ display: ready && !failed ? "block" : "none" }}
+          onCanPlay={() => setReady(true)}
+          onError={() => setFailed(true)}
+        />
+        {(!ready || failed) && (
+          <div className="grid h-28 w-56 place-items-center">
+            {failed ? (
+              <span role="alert">Video could not load.</span>
+            ) : (
+              <span
+                className="particle-count"
+                role="progressbar"
+                aria-label="Loading video"
+                aria-valuenow={progress}
+                aria-valuemin={0}
+                aria-valuemax={100}
+              >
+                {progress}%
+              </span>
+            )}
+          </div>
+        )}
         <button
           type="button"
           onClick={() => viewer.current?.close()}
           aria-label="Close video"
           className="absolute right-0 bottom-full mb-2 grid size-12 place-items-center rounded-full bg-black/50 text-[28px] leading-none text-white backdrop-blur-lg dark:bg-white/50 dark:text-black"
         >
-          ×
+          <svg
+            aria-hidden="true"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          >
+            <path d="m5 5 14 14M19 5 5 19" />
+          </svg>
         </button>
       </dialog>
     </>

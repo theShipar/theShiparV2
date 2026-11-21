@@ -90,3 +90,17 @@ main:has(.interaction-gallery) > div > div {
 body:has(.interaction-gallery) header nav a {
   color: var(--foreground);
 }
+
+.particle-count {
+  --particle-ink: black;
+  color: transparent;
+  background: radial-gradient(circle, var(--particle-ink) 1.25px, transparent 1.55px) 0 0 / 3.5px 3.5px;
+  background-clip: text;
+  font: 900 52px/1 var(--font-sans), sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.dark .particle-count { --particle-ink: white; }
+@media (prefers-reduced-motion: no-preference) {
+  .particle-count { animation: particle-drift 1.4s linear infinite; }
+  @keyframes particle-drift { to { background-position: 3.5px -3.5px; } }
+}
