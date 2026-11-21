@@ -74,8 +74,11 @@ main:has(.interaction-gallery) > div > div {
   overflow: visible;
 }
 .interaction-viewer::backdrop {
-  background: rgb(8 8 10 / 55%);
+  background: rgb(255 255 255 / 62%);
   backdrop-filter: blur(18px);
+}
+.dark .interaction-viewer::backdrop {
+  background: rgb(8 8 10 / 55%);
 }
 .interaction-viewer video {
   display: block;
@@ -92,14 +95,14 @@ body:has(.interaction-gallery) header nav a {
 }
 
 .particle-count {
-  --particle-ink: black;
+  --particle-edge: rgb(35 35 40 / 85%);
   color: transparent;
-  background: radial-gradient(circle, var(--particle-ink) 1.25px, transparent 1.55px) 0 0 / 3.5px 3.5px;
+  background: radial-gradient(circle, white 1px, var(--particle-edge) 1.45px, transparent 1.75px) 0 0 / 3.5px 3.5px;
   background-clip: text;
   font: 900 52px/1 var(--font-sans), sans-serif;
   font-variant-numeric: tabular-nums;
 }
-.dark .particle-count { --particle-ink: white; }
+.dark .particle-count { --particle-edge: white; }
 @media (prefers-reduced-motion: no-preference) {
   .particle-count { animation: particle-drift 1.4s linear infinite; }
   @keyframes particle-drift { to { background-position: 3.5px -3.5px; } }

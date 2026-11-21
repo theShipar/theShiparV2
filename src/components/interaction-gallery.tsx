@@ -410,6 +410,10 @@ export function InteractionGallery() {
         ref={viewer}
         className="interaction-viewer"
         aria-label="Interaction video"
+        onClick={(event) => {
+          if (!ready && event.target === event.currentTarget)
+            event.currentTarget.close()
+        }}
         onClose={() => {
           setSource("")
           surface.current?.focus()
@@ -442,25 +446,27 @@ export function InteractionGallery() {
             )}
           </div>
         )}
-        <button
-          type="button"
-          onClick={() => viewer.current?.close()}
-          aria-label="Close video"
-          className="absolute right-0 bottom-full mb-2 grid size-12 place-items-center rounded-full bg-black/50 text-[28px] leading-none text-white backdrop-blur-lg dark:bg-white/50 dark:text-black"
-        >
-          <svg
-            aria-hidden="true"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
+        {(ready || failed) && (
+          <button
+            type="button"
+            onClick={() => viewer.current?.close()}
+            aria-label="Close video"
+            className="absolute right-0 bottom-full mb-2 grid size-12 place-items-center rounded-full bg-black/50 text-[28px] leading-none text-white backdrop-blur-lg dark:bg-white/50 dark:text-black"
           >
-            <path d="m5 5 14 14M19 5 5 19" />
-          </svg>
-        </button>
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            >
+              <path d="m5 5 14 14M19 5 5 19" />
+            </svg>
+          </button>
+        )}
       </dialog>
     </>
   )
