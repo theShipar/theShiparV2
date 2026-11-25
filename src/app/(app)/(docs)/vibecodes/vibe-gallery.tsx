@@ -86,7 +86,7 @@ export function VibeGallery() {
         card.style.aspectRatio = String(projects[i].ratio)
         card.style.transform = mobile
           ? `translate(${y}px, -50%)`
-          : `translate(-50%, ${y}px)`
+          : `translate(-100%, ${y}px)`
       })
       setCurrent(Math.round(position))
     }
@@ -118,6 +118,17 @@ export function VibeGallery() {
   const active = current
   return (
     <section className="vibe-stage" aria-label="VibeCodes projects">
+      <div className="vibe-atmosphere" aria-hidden="true">
+        {projects.map((p, i) => (
+          <span
+            key={p.name}
+            style={{
+              backgroundImage: `url("${p.poster}")`,
+              opacity: current === i ? 1 : 0,
+            }}
+          />
+        ))}
+      </div>
       <div
         className="vibe-rail"
         ref={rail}
@@ -197,6 +208,29 @@ export function VibeGallery() {
           </button>
         ))}
       </nav>
+      <div
+        className="vibe-mobile-controls"
+        role="group"
+        aria-label="Project navigation"
+      >
+        <button
+          aria-label="Previous project"
+          disabled={current === 0}
+          onClick={() => select(current - 1)}
+        >
+          ←
+        </button>
+        <span aria-live="polite">
+          {String(current + 1).padStart(2, "0")} <i>/</i> 02
+        </span>
+        <button
+          aria-label="Next project"
+          disabled={current === projects.length - 1}
+          onClick={() => select(current + 1)}
+        >
+          →
+        </button>
+      </div>
       <dialog
         ref={dialog}
         className="interaction-viewer"
