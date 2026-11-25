@@ -1,0 +1,39 @@
+body:has(.interaction-gallery, .vibe-stage) > header {
+  position: fixed;
+  inset: 0 0 auto;
+  color: var(--foreground);
+  padding: max(0.5rem, env(safe-area-inset-top)) 2vw 1rem;
+}
+body:has(.interaction-gallery, .vibe-stage) > header {
+  background: transparent;
+  isolation: isolate;
+}
+body:has(.interaction-gallery, .vibe-stage) > header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background: var(--background);
+  backdrop-filter: blur(6px);
+  mask-image: linear-gradient(to bottom, black, rgb(0 0 0 / 82%) 38%, transparent);
+}
+body:has(.interaction-gallery, .vibe-stage) header :is(a, button) { box-shadow: none; }
+@media (width < 48rem) {
+  body:has(.interaction-gallery, .vibe-stage) > header { padding-bottom: 2rem; }
+  body:has(.interaction-gallery, .vibe-stage) > header[data-menu-open="true"]::before {
+    mask-image: linear-gradient(to bottom, black, rgb(0 0 0 / 78%) 65%, transparent);
+  }
+  body:has(.interaction-gallery, .vibe-stage) #mobile-navigation {
+    border: 0;
+    padding: 26px 4px 0;
+  }
+}
+body:has(.interaction-gallery, .vibe-stage) [data-header-container] {
+  max-width: none;
+  border: 0;
+}
+body:has(.interaction-gallery, .vibe-stage) [data-header-container]::before,
+body:has(.interaction-gallery, .vibe-stage) [data-header-container]::after {
+  display: none;
+}

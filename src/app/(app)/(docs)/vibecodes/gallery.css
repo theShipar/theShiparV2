@@ -1,0 +1,245 @@
+@import "../interaction-design/gallery.css";
+@import "../gallery-header.css";
+body:has(.vibe-stage) {
+  overflow: hidden;
+}
+body:has(.vibe-stage) > footer,
+body:has(.vibe-stage) .mobile-project-actions {
+  display: none;
+}
+.vibe-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: var(--background);
+  color: var(--foreground);
+
+  font-family: var(--font-mono), monospace;
+}
+.vibe-rail {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  overflow-anchor: none;
+}
+.vibe-window {
+  position: sticky;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.vibe-travel {
+  height: 24vw;
+  pointer-events: none;
+}
+.vibe-slide {
+  position: absolute;
+  top: 0;
+  left: 61%;
+  aspect-ratio: 1848/1080;
+  display: block;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.vibe-media,
+.vibe-media video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-size: cover;
+  background-position: center;
+  object-fit: contain;
+}
+.vibe-number {
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  padding-inline: 0.4vw;
+  font: 400 clamp(6px, 0.72vw, 12px) / 1.2 monospace;
+  color: #aaa;
+}
+.vibe-slide[data-active="true"] .vibe-number {
+  left: auto;
+  right: 100%;
+  color: #fff;
+}
+.vibe-index {
+  position: absolute;
+  left: 1.5%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 27%;
+  font-family: var(--font-mono), monospace;
+}
+.vibe-index button {
+  text-align: left;
+  text-transform: uppercase;
+  font-size: clamp(7px, 0.84vw, 16px);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: #929294;
+  cursor: pointer;
+}
+.vibe-index button[aria-current] {
+  font-size: clamp(10px, 1.22vw, 24px);
+  font-weight: 700;
+  color: white;
+}
+.vibe-home,
+.vibe-cursor {
+  font: 600 9px/1.2 monospace;
+  color: white;
+  background: #242426;
+  border-radius: 3px;
+  padding: 5px 8px;
+}
+.vibe-home {
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+}
+.vibe-cursor {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+@media (hover: hover) {
+  .vibe-slide[data-active="true"]:hover {
+    cursor: none;
+  }
+  .vibe-slide[data-active="true"]:hover .vibe-cursor {
+    display: block;
+  }
+}
+.vibe-dialog[open] {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  background: transparent;
+  max-width: 96vw;
+  overflow: visible;
+}
+.vibe-dialog::backdrop {
+  background: #09090bf5;
+}
+.vibe-dialog video {
+  max-width: 92vw;
+  max-height: 82dvh;
+}
+.vibe-dialog button {
+  display: block;
+  margin-left: auto;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.vibe-index button[aria-current] {
+  color: var(--foreground);
+}
+@media (width < 48rem) {
+  .vibe-rail {
+    display: flex;
+    overflow-y: hidden;
+    touch-action: pan-x;
+  }
+  .vibe-window {
+    left: 0;
+    flex: 0 0 100%;
+  }
+  .vibe-travel {
+    height: 1px;
+    flex: 0 0 82vw;
+  }
+  .vibe-slide {
+    top: 45%;
+    left: 0;
+  }
+  .vibe-index {
+    top: auto;
+    bottom: max(3vh, env(safe-area-inset-bottom));
+    left: 4%;
+    width: 92%;
+    transform: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .vibe-index button {
+    font-size: 10px;
+    min-height: 32px;
+  }
+  .vibe-index button[aria-current] {
+    font-size: 12px;
+  }
+}
+
+.vibe-media {
+  opacity: 0.35;
+  filter: blur(3px);
+  transition:
+    opacity 240ms ease-out,
+    filter 240ms ease-out;
+}
+.vibe-slide[data-active="true"] .vibe-media {
+  opacity: 1;
+  filter: none;
+}
+.vibe-slide[data-active="false"] .vibe-number {
+  visibility: hidden;
+}
+.vibe-index button,
+.vibe-index button[aria-current] {
+  font-size: clamp(10px, 0.84vw, 16px);
+  line-height: 1.5;
+  color: var(--foreground);
+  transition: opacity 180ms;
+}
+.vibe-index button {
+  font-weight: 400;
+  opacity: 0.35;
+}
+.vibe-index button[aria-current] {
+  font-weight: 700;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vibe-media,
+  .vibe-index button {
+    transition: none;
+  }
+}
+
+.vibe-caption {
+  display: none;
+}
+@media (width < 48rem) {
+  .vibe-index {
+    display: none;
+  }
+  .vibe-caption {
+    display: block;
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.35;
+  }
+  .vibe-slide[data-active="true"] .vibe-caption {
+    opacity: 1;
+    font-weight: 600;
+  }
+}

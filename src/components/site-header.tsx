@@ -84,7 +84,7 @@ export function SiteHeader({
           </Button>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center md:-ml-2">
           <ThemeToggle />
           <Button
             ref={trigger}

@@ -1,47 +1,9 @@
+@import "../gallery-header.css";
 body:has(.interaction-gallery) > footer,
 main:has(.interaction-gallery) .screen-line-after.h-8 {
   display: none;
 }
 
-body:has(.interaction-gallery) > header {
-  position: fixed;
-  inset: 0 0 auto;
-  color: var(--foreground);
-  padding: max(0.5rem, env(safe-area-inset-top)) 2vw 1rem;
-}
-body:has(.interaction-gallery) > header {
-  background: transparent;
-  isolation: isolate;
-}
-body:has(.interaction-gallery) > header::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  background: var(--background);
-  backdrop-filter: blur(6px);
-  mask-image: linear-gradient(to bottom, black, rgb(0 0 0 / 82%) 38%, transparent);
-}
-body:has(.interaction-gallery) header :is(a, button) { box-shadow: none; }
-@media (width < 48rem) {
-  body:has(.interaction-gallery) > header { padding-bottom: 2rem; }
-  body:has(.interaction-gallery) > header[data-menu-open="true"]::before {
-    mask-image: linear-gradient(to bottom, black, rgb(0 0 0 / 78%) 65%, transparent);
-  }
-  body:has(.interaction-gallery) #mobile-navigation {
-    border: 0;
-    padding: 26px 4px 0;
-  }
-}
-body:has(.interaction-gallery) [data-header-container] {
-  max-width: none;
-  border: 0;
-}
-body:has(.interaction-gallery) [data-header-container]::before,
-body:has(.interaction-gallery) [data-header-container]::after {
-  display: none;
-}
 body:has(.interaction-gallery) main {
   position: fixed;
   inset: 0;

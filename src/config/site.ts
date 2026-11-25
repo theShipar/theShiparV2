@@ -16,7 +16,7 @@ export const META_THEME_COLORS = {
 
 export const MAIN_NAV: NavItem[] = [
   {
-    title: "Projects",
+    title: "Works",
     href: "/projects",
   },
   {
@@ -24,7 +24,11 @@ export const MAIN_NAV: NavItem[] = [
     href: "/components",
   },
   {
-    title: "Interaction Design",
+    title: "VibeCodes",
+    href: "/vibecodes",
+  },
+  {
+    title: "Interactions",
     href: "/interaction-design",
   },
   {
